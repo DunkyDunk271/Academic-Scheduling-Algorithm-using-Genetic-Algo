@@ -1,8 +1,11 @@
 from flask import Flask, render_template
-from flask_mysqldb import MySQL, MySQLdb
+
+#from flask_mysqldb import MySQL, MySQLdb
 
 app = Flask(__name__)
 
+
+'''
 app.secret_key = 'courserelatedproject1'
 
 app.config['MySQL_HOST'] = 'localhost'
@@ -22,3 +25,4 @@ def index():
 
 if __name__ == '__main__':
     app.run(debug = True)
+'''
