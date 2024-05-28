@@ -1,8 +1,9 @@
 class StudentGroup:
-    def __init__(self, stud_group_id, stud_group_size, course_ids):
-        self.__stud_group_id = stud_group_id
-        self.__stud_group_size = stud_group_size
-        self.__course_ids = course_ids
+    def __init__(self, id, name, numberOfStudents):
+        self.Id = id
+        self.Name = name
+        self.NumberOfStudents = numberOfStudents
+        self.CourseClasses = []
 
     @property
     def stud_group_id(self):

@@ -1,23 +1,14 @@
 import random
 
 class Course:
-    def __init__(self, course_id, course_code, course_name, prof_ids):
-        self.__course_id = course_id
-        self.__course_code = course_code
-        self.__course_name = course_name
-        self.__prof_ids = prof_ids
+    def __init__(self, id, code, name, credit):
+        self.Id = id
+        
+        # Code like COMP2020
+        self.Code = code
 
-    @property
-    def course_id(self):
-        return self.__course_id
+        # Name of the course
+        self.Name = name
 
-    @property
-    def course_code(self):
-        return self.__course_code
-
-    @property
-    def course_name(self):
-        return self.__course_name
-
-    def get_random_prof_id(self):
-        return random.choice(self.__prof_ids)
+        # Credit of the course (max 4)
+        self.Credit = credit
