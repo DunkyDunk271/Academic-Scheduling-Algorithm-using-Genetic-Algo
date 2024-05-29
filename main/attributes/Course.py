@@ -12,3 +12,6 @@ class Course:
 
         # Credit of the course (max 4)
         self.Credit = credit
+    
+    def GetId(self):
+        return self.Id

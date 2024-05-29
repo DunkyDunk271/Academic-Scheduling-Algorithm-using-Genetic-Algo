@@ -9,6 +9,9 @@ class StudentsGroup:
     def addClass(self, course_class):
         self.CourseClasses.append(course_class)
 
+    def GetId(self):
+        return self.Id
+
     def __hash__(self):
         return hash(self.Id)
 

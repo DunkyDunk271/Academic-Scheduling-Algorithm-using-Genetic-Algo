@@ -3,6 +3,9 @@ class Professor:
         self.Id = prof_id
         self.Name = prof_name
         self.CourseClasses = []
+
+    def GetId(self):
+        return self.Id
     
     def __hash__(self):
         return hash(self.Id)
@@ -10,6 +13,9 @@ class Professor:
     # Bind professor to course
     def add_prof_course(self, course_class):
         self.CourseClasses.append(course_class)
+
+    def addCourseClass(self, course):
+        self.CourseClasses.append(course)
     
     # Compares ID
     def __eq__(self, other):
@@ -19,3 +25,4 @@ class Professor:
     
     def __ne__(self, other):
         return not (self == other)
+    

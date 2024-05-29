@@ -23,6 +23,9 @@ class Room:
     def __hash__(self):
         return hash(self.Id)
     
+    def GetId(self):
+        return self.Id
+    
     def GetNumberOfSeats(self):
         return self.NumberOfSeats
     
