@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scheduling</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.0/main.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.0/main.min.js"></script>
+    
+    <!-- Ajax Lib -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    
+    <!--Fullcalendar.io-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    
+    <!--jQuery Implementation-->
+    <script>
+        var calendar;
+        var Calendar = fullCalendar.Calendar;
+        var event =[];
+       $(function(){
+
+       }) 
+    </script>
+    <script>
+        $(document).ready(function() {
+         var calendar = $('#calendar').fullCalendar({
+          editable:true,
+          header:{
+           left:'prev,next today',
+           center:'title',
+           right:'month,agendaWeek,agendaDay'
+          },
+          events: [{% for row in calendar %}{ id : '{{row.id}}', title : '{{row.title}}', start : '{{row.start_event}}', end : '{{row.end_event}}', }, {% endfor %}],
+          selectable:true,
+          selectHelper:true,
+          select: function(start, end, allDay)
+          {
+           var title = prompt("Enter Event Title");
+           if(title)
+           {
+            var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
+            var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+            $.ajax({
+             url:"/insert",
+             type:"POST",
+             data:{title:title, start:start, end:end},
+             success:function(data)
+             {
+               //alert(data)
+              alert("Added Successfully");
+              window.location.replace("/");
+             }
+            })
+           }
+          },
+          editable:true,
+          eventResize:function(event)
+          {
+           var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+           var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+           var title = event.title;
+           var id = event.id;
+           $.ajax({
+            url:"/update",
+            type:"POST",
+            data:{title:title, start:start, end:end, id:id},
+            success:function(){
+             calendar.fullCalendar('refetchEvents');
+             alert('Event Update');
+            }
+           })
+          },
+           
+          eventDrop:function(event)
+          {
+           var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+           var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+           var title = event.title;
+           var id = event.id;
+           $.ajax({
+            url:"/update",
+            type:"POST",
+            data:{title:title, start:start, end:end, id:id},
+            success:function()
+            {
+             calendar.fullCalendar('refetchEvents');
+             alert("Event Updated");
+            }
+           });
+          },
+       
+          eventClick:function(event)
+          {
+           if(confirm("Are you sure you want to remove it?"))
+           {
+            var id = event.id;
+            $.ajax({
+             url:"/ajax_delete",
+             type:"POST",
+             data:{id:id},
+             success:function()
+             {
+              calendar.fullCalendar('refetchEvents');
+              alert("Event Removed");
+             }
+            })
+           }
+          },
+       
+         });
+        }); 
+    </script>
+    <!--Style for Calendar -->
+    <style>
+        :root {
+            --bs-success-rgb: 71, 222, 152 !important;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            font-family: Apple Chancery, cursive;
+        }
+
+        .btn-info.text-light:hover, .btn-info.text-light:focus {
+            background: #000;
+        }
+        table, tbody, td, tfoot, th, thead, tr {
+            border-color: #ededed !important;
+            border-style: solid;
+            border-width: 1px !important;
+        }
+    </style>
+</head>
+<!--Academic Calendar-->
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient" id="topNavBar">
+        <div class="container">
+            <a class="navbar-brand" href="https://sourcecodester.com">
+                Sourcecodester
+            </a>
+            <div>
+                <b class="text-light">Sample Scheduling</b>
+            </div>
+        </div>
+    </nav>
+    <div class="container py-5" id="page-container">
+        <div class="row">
+            <div class="col-md-9">
+                <div id="calendar"></div>
+            </div>
+            <div class="col-md-3">
+                <div class="card rounded-0 shadow">
+                    <div class="card-header bg-gradient bg-primary text-light">
+                        <h5 class="card-title">Schedule Form</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="container-fluid">
+                            <form id="schedule-form">
+                                <input type="hidden" name="id" value="">
+                                <div class="form-group mb-2">
+                                    <label for="title" class="control-label">Title</label>
+                                    <input type="text" class="form-control form-control-sm rounded-0" name="title" id="title" required>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="description" class="control-label">Description</label>
+                                    <textarea rows="3" class="form-control form-control-sm rounded-0" name="description" id="description" required></textarea>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="start_datetime" class="control-label">Start</label>
+                                    <input type="datetime-local" class="form-control form-control-sm rounded-0" name="start_datetime" id="start_datetime" required>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="end_datetime" class="control-label">End</label>
+                                    <input type="datetime-local" class="form-control form-control-sm rounded-0" name="end_datetime" id="end_datetime" required>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="text-center">
+                            <button class="btn btn-primary btn-sm rounded-0" type="submit" id="save-button"><i class="fa fa-save"></i> Save</button>
+                            <button class="btn btn-default border btn-sm rounded-0" type="reset" form="schedule-form"><i class="fa fa-reset"></i> Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Event Details Modal -->
+    <div class="modal fade" tabindex="-1" data-backdrop="static" id="event-details-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-0">
+                <div class="modal-header rounded-0">
+                    <h5 class="modal-title">Schedule Details</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body rounded-0">
+                    <div class="container-fluid">
+                        <dl>
+                            <dt class="text-muted">Title</dt>
+                            <dd id="detail-title" class="fw-bold fs-4"></dd>
+                            <dt class="text-muted">Description</dt>
+                            <dd id="detail-description"></dd>
+                            <dt class="text-muted">Start</dt>
+                            <dd id="detail-start"></dd>
+                            <dt class="text-muted">End</dt>
+                            <dd id="detail-end"></dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="modal-footer rounded-0">
+                    <div class="text-end">
+                        <button type="button" class="btn btn-primary btn-sm rounded-0" id="edit" data-id="">Edit</button>
+                        <button type="button" class="btn btn-danger btn-sm rounded-0" id="delete" data-id="">Delete</button>
+                        <button type="button" class="btn btn-secondary btn-sm rounded-0" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+</body>
+</html>
