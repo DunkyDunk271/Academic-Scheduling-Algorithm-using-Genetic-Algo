@@ -1,0 +1,36 @@
+from Configuration import Configuration
+
+# Number of Studying day in a week
+DAYS_NUM = 5
+
+# Number of hours in a day
+DAY_HOURS = 8
+
+# Get instance of configuration
+instance = Configuration()
+
+# Schedule Choromsome
+class Schedule:
+
+    def __init__(self, numberOfCrossoverPoints, mutationSize, crossoverProbability, mutationProbability):
+            # Number of crossover points of parent's class tables
+            self.numberOfCrossoverPoints = numberOfCrossoverPoints
+            # Number of classes that is moved randomly by single mutation operation
+            self.mutationSize = mutationSize
+            # Probability that crossover will occure
+            self.crossoverProbability = crossoverProbability
+            # Probability that mutation will occure
+            self.mutationProbability = mutationProbability
+            # Fitness value of chromosome
+            self.fitness = 0
+            # Time-space slots, one entry represent one hour in one classroom
+            self.slots = []
+            # Flags of class requirements satisfaction
+            self.criteria = []
+
+            self.score = 0
+            
+            self.classes = {}
+            
+            self.slots = ( DAYS_NUM * DAY_HOURS * instance.GetNumberOfRooms() ) * [None]
+            self.criteria = (instance.GetNumberOfCourseClasses() * 5 )* [None]

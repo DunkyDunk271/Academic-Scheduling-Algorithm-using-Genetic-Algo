@@ -19,36 +19,36 @@ class Configuration:
 
         Room.Room.restartIDs()
     
-    def get_professor(self, id):
+    def GetProfessorById(self, id):
         pass
 
-    def get_students_group(self, id):
+    def GetStudentsGroupById(self, id):
         pass
 
-    def get_course(self, id):
+    def GetCourseById(self, id):
         pass
     
-    def get_room(self, id):
+    def GetRoomById(self, id):
         pass
     
-    def get_course_class(self):
+    def GetCourseClasses(self):
         return self._courseClasses
     
     #################################################################
 
-    def get_num_of_professors(self):
+    def GetNumberOfProfessors(self):
         return len(self._professors.keys())
     
-    def get_num_of_groups(self):
+    def GetNumberOfStudentGroups(self):
         return len(self._studentGroups)
 
-    def get_num_of_courses(self):
+    def GetNumberOfCourses(self):
         return len(self._courses)
     
-    def get_num_of_rooms(self):
+    def GetNumberOfRooms(self):
         return len(self._rooms)
     
-    def get_num_of_course_classes(self):
+    def GetNumberOfCourseClasses(self):
         return len(self._courseClasses)
     
     # Returns TRUE if configuration is not parsed yet
