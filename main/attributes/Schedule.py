@@ -194,6 +194,7 @@ class Schedule:
         
         self.CalculateFitness()
 
+    # Can be changed
     # Calculates fitness value of chromosome
     def CalculateFitness(self):
         score = 0
@@ -203,8 +204,7 @@ class Schedule:
         ci = 0
 
         for i in self.classes.keys():
-            # coordinate of time-space slot
-            p = self.classes[ i ]
+            p = self.classes[i]
             day = p // daySize
             time = p % daySize
             room = time // DAY_HOURS
@@ -228,13 +228,13 @@ class Schedule:
             cc = i
             r = instance.GetRoomById( room )
             # does current room have enough seats
-            self.criteria[ ci + 1 ] = r.GetNumberOfSeats() >= cc.GetNumberOfSeats()
+            self.criteria[ci + 1] = r.GetNumberOfSeats() >= cc.GetNumberOfSeats()
             if self.criteria[ ci + 1 ]:
                 score = score + 1
 
             # does current room have computers if they are required
-            self.criteria[ ci + 2 ] = ( not cc.IsLabRequired() ) or ( cc.IsLabRequired() and r.IsLab() )
-            if self.criteria[ ci + 2 ]:
+            self.criteria[ ci + 2 ] = (not cc.IsLabRequired()) or (cc.IsLabRequired() and r.IsLab())
+            if self.criteria[ci + 2]:
                 score = score + 1
 
             po = False
@@ -242,7 +242,7 @@ class Schedule:
             # check overlapping of classes for professors and student groups
             t = day * daySize + time
             breakPoint = False
-            for k in range( numberOfRooms, 0, -1 ):
+            for k in range(numberOfRooms, 0, -1):
                 if breakPoint == True: break
                 # for each hour of class
                 for l in range( dur - 1, -1, -1 ):
@@ -254,10 +254,10 @@ class Schedule:
                             if breakPoint == True: break
                             if cc != it:
                                 # professor overlaps?
-                                if not po and cc.ProfessorOverlaps( it ):
+                                if not po and cc.ProfessorOverlaps(it):
                                     po = True
                                 # student group overlaps?
-                                if not go and cc.GroupsOverlap( it ):
+                                if not go and cc.GroupsOverlap(it):
                                     go = True
                                 # both type of overlapping? no need to check more
                                 if po and go:
@@ -267,17 +267,17 @@ class Schedule:
             # professors have no overlapping classes?
             if not po:
                 score = score + 1
-            self.criteria[ ci + 3 ] = not po
+            self.criteria[ci + 3] = not po
 
             # student groups has no overlapping classes?
             if not go:
                 score = score + 1
-            self.criteria[ ci + 4 ] = not go
+            self.criteria[ci + 4] = not go
 
             ci += 5
 
         # calculate fitness value based on score
-        self.fitness = score / ( instance.GetNumberOfCourseClasses() * DAYS_NUM )
+        self.fitness = score / (instance.GetNumberOfCourseClasses() * DAYS_NUM)
         self.score = score
 
     # Returns fitness value of chromosome
