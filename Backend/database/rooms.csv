@@ -1,5 +1,9 @@
 name,lab,size
-R48,false,24
-R53,true,60
-R50,true,60
-R13,true,60
+C101,false,24
+C102,false,48
+C202,false,90
+C204,false,50
+G101,true,80
+G103,true,60
+G207,true,60
+G302,true,30
