@@ -1,23 +1,24 @@
-id,course,credits,professor,room,start,end
-0,EHM ev crag.,1,Ericyan S.,R53,2024-05-22 16:00:00,2024-05-22 17:00:00
-1,EHM ev crag.,1,Mnacakanyan,R13,2024-05-21 14:00:00,2024-05-21 15:00:00
-2,EHM ev crag.,1,Mnacakanyan,R13,2024-05-23 12:00:00,2024-05-23 13:00:00
-3,EHM ev crag.,1,Mnacakanyan,R53,2024-05-22 17:00:00,2024-05-22 18:00:00
-4,Discrete Mathematic,1,Osipyan A.,R13,2024-05-23 13:00:00,2024-05-23 14:00:00
-5,Discrete Mathematic,1,Osipyan A.,R13,2024-05-21 16:00:00,2024-05-21 17:00:00
-6,Assembler,1,Harutyunyan A.,R48,2024-05-22 11:00:00,2024-05-22 12:00:00
-7,Assembler,1,Harutyunyan A.,R50,2024-05-22 12:00:00,2024-05-22 13:00:00
-8,GUI cragravorum,1,Mnacakanyan,R53,2024-05-25 14:00:00,2024-05-25 15:00:00
-9,Grafneri tesutyun,1,Osipyan A.,R13,2024-05-21 17:00:00,2024-05-21 18:00:00
-10,Tvayin Metodner,1,Manasyan V.,R53,2024-05-22 11:00:00,2024-05-22 12:00:00
-11,Tvayin Metodner,1,Manasyan V.,R48,2024-05-23 14:00:00,2024-05-23 15:00:00
-12,Tvayin Metodner,1,Manasyan V.,R48,2024-05-25 17:00:00,2024-05-25 18:00:00
-13,Lisp,1,Sahakyan G.,R48,2024-05-22 13:00:00,2024-05-22 14:00:00
-14,Kombinator algorithmner,1,Osipyan A.,R53,2024-05-24 16:00:00,2024-05-24 17:00:00
-15,Kombinator algorithmner,1,Osipyan A.,R48,2024-05-23 12:00:00,2024-05-23 13:00:00
-16,Optimizacman met.,1,Zaqaryan Gh.,R50,2024-05-23 13:00:00,2024-05-23 14:00:00
-17,Optimizacman met.,1,Zaqaryan Gh.,R53,2024-05-21 17:00:00,2024-05-21 18:00:00
-18,Komp. Cancer,1,Galstyan A.,R50,2024-05-24 14:00:00,2024-05-24 15:00:00
-19,Komp. Cancer,1,Galstyan A.,R13,2024-05-22 12:00:00,2024-05-22 13:00:00
-20,Mat. Kibernetika,1,Manasyan V.,R48,2024-05-23 17:00:00,2024-05-23 18:00:00
-21,Mat. Kibernetika,1,Manasyan V.,R53,2024-05-21 16:00:00,2024-05-21 17:00:00
+id,course,code,credits,professor,room,start,end
+0,Computer Organization,COMP2020,4,Prof Nam.,G302,2024-05-23 10:00:00,2024-05-23 11:00:00
+1,Computer Organization,COMP2020,4,Prof Nam.,C202,2024-05-22 15:00:00,2024-05-22 17:00:00
+2,Artificial Inteligence,COMP2050,3,Prof Khoa.,G101,2024-05-24 14:00:00,2024-05-24 16:00:00
+3,Artificial Inteligence,COMP2050,3,Prof Khoa.,G101,2024-05-24 11:00:00,2024-05-24 14:00:00
+4,Calculus,MATH1010,4,Prof Phan.,G207,2024-05-21 10:00:00,2024-05-21 11:00:00
+5,Calculus,MATH1010,4,Prof Phan.,G207,2024-05-25 15:00:00,2024-05-25 16:00:00
+6,Probability and Statistic,MATH1020,3,Prof Phan.,C202,2024-05-25 16:00:00,2024-05-25 18:00:00
+7,Algorithm Design,COMP3010,4,Prof Hieu,C202,2024-05-21 15:00:00,2024-05-21 18:00:00
+8,Algorithm Design,COMP3010,4,Prof Hieu,G101,2024-05-21 10:00:00,2024-05-21 11:00:00
+9,Tennis,TENN3030,4,Prof Binh.,G207,2024-05-23 11:00:00,2024-05-23 13:00:00
+10,Healthy Lifestyle,LIFE1010,1,Prof Binh.,G207,2024-05-22 11:00:00,2024-05-22 12:00:00
+11,Introduction to Programming,COMP1010,2,Prof Hung.,G103,2024-05-22 12:00:00,2024-05-22 14:00:00
+12,Introduction to Programming,COMP1010,2,Prof Hung.,G302,2024-05-25 15:00:00,2024-05-25 16:00:00
+13,History I,HASS1010,2,Prof Dang.,G101,2024-05-22 12:00:00,2024-05-22 14:00:00
+14,Linear Algebra,MATH2030,2,Prof Dang.,G101,2024-05-25 16:00:00,2024-05-25 18:00:00
+15,Physic II,PHYS2010,2,Prof Khuong.,C102,2024-05-21 13:00:00,2024-05-21 14:00:00
+16,Physic II,PHYS2010,2,Prof Khuong.,G302,2024-05-24 11:00:00,2024-05-24 13:00:00
+17,Differential Equation,MATH3030,4,Prof Khuong.,G103,2024-05-21 10:00:00,2024-05-21 12:00:00
+18,Music Appreciation,MUSI1010,1,Prof Sang.,C101,2024-05-25 14:00:00,2024-05-25 15:00:00
+19,Discrete Mathematic,MATH2010,3,Prof Sang.,C202,2024-05-24 14:00:00,2024-05-24 17:00:00
+20,Philosophy,HASS2020,2,Prof Lia,C204,2024-05-25 12:00:00,2024-05-25 13:00:00
+21,Philosophy,HASS2020,2,Prof Lia,C202,2024-05-21 14:00:00,2024-05-21 15:00:00
+
