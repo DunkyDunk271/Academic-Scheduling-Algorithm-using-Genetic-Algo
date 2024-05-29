@@ -9,6 +9,7 @@ DAY_HOURS = 8
 
 # Get instance of configuration
 instance = Configuration()
+instance.readcsv()
 
 # Schedule Choromsome
 class Schedule:
