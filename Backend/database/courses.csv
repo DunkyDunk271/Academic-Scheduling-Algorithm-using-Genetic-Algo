@@ -1,12 +1,16 @@
 id,code,name,credits
-1,a,Komp. Cancer,1
-2,a,Grafneri tesutyun,1
-3,a,Kombinator algorithmner,1
-4,a,GUI cragravorum,1
-5,a,Discrete Mathematic,1
-6,a,EHM ev crag.,1
-7,a,Lisp,1
-8,a,Assembler,1
-9,a,Tvayin Metodner,1
-10,a,Optimizacman met.,1
-11,a,Mat. Kibernetika,1
+1,COMP3010,Algorithm Design,4
+2,MATH1010,Calculus,4
+3,COMP2050,Artificial Inteligence,3
+4,LIFE1010,Healthy Lifestyle,1
+5,MATH2010,Discrete Mathematic,3
+6,MATH1020,Probability and Statistic,3
+7,COMP2020,Computer Organization,4
+8,MATH3030,Differential Equation,4
+9,PHYS2010,Physic II,2
+10,COMP1010,Introduction to Programming,2
+11,MATH2030,Linear Algebra,2
+12,HASS1010,History I,2
+13,MUSI1010,Music Appreciation,1
+14,HASS2020,Philosophy,2
+15,TENN3030,Tennis,4
