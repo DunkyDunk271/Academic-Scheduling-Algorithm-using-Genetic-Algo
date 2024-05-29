@@ -7,6 +7,9 @@ class Professor:
     def GetId(self):
         return self.Id
     
+    def GetName(self):
+        return self.Name
+    
     def __hash__(self):
         return hash(self.Id)
 

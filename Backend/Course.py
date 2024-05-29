@@ -15,3 +15,9 @@ class Course:
     
     def GetId(self):
         return self.Id
+    
+    def GetCredits(self):
+        return self.Credit
+    
+    def GetName(self):
+        return self.Name

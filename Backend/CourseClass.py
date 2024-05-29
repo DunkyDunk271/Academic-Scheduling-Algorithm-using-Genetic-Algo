@@ -40,6 +40,15 @@ class CourseClass:
     def GetNumberOfSeats(self):
         return self.NumberOfSeats
     
+    def GetGroups(self):
+        return self.Groups
+    
+    def GetCourse(self):
+        return self.Course
+    
+    def GetProfessor(self):
+        return self.Professor
+    
     def IsLabRequired(self):
         return self.LabRequired
 

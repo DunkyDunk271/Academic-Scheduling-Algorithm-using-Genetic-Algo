@@ -29,6 +29,9 @@ class Room:
     def GetNumberOfSeats(self):
         return self.NumberOfSeats
     
+    def GetName(self):
+        return self.Name
+    
     def IsLab(self):
         return self.Lab
     

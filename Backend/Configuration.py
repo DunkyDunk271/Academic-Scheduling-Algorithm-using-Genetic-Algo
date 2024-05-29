@@ -1,5 +1,4 @@
-import codecs
-#import mysql.connector
+import os
 import csv
 
 from Professor import Professor
@@ -32,9 +31,25 @@ class Configuration:
         self._rooms = {}
         self._courseClasses = []
 
+        # Get file path
+        cwd = os.getcwd()
+        if 'Backend' in cwd:
+            professors_path = os.path.join(cwd, 'database\professors.csv')
+            courses_path = os.path.join(cwd, 'database\courses.csv')
+            rooms_path = os.path.join(cwd, 'database\\rooms.csv')
+            groups_path = os.path.join(cwd, 'database\groups.csv')
+            classes_path = os.path.join(cwd, 'database\classes.csv')
+
+        else:
+            professors_path = os.path.join(cwd, 'Backend\database\professors.csv')
+            courses_path = os.path.join(cwd, 'Backend\database\courses.csv')
+            rooms_path = os.path.join(cwd, 'Backend\database\\rooms.csv')
+            groups_path = os.path.join(cwd, 'Backend\database\groups.csv')
+            classes_path = os.path.join(cwd, 'Backend\database\classes.csv')
+
         # Read professors
         count = 0
-        with open("database/professors.csv", "r") as file:
+        with open(professors_path, "r") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if count == 0:
@@ -47,7 +62,7 @@ class Configuration:
 
         # Read courses
         count = 0
-        with open("database/courses.csv", "r") as file:
+        with open(courses_path, "r") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if count == 0:
@@ -62,7 +77,7 @@ class Configuration:
 
         # Read rooms
         count = 0
-        with open("database/rooms.csv", "r") as file:
+        with open(rooms_path, "r") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if count == 0:
@@ -76,7 +91,7 @@ class Configuration:
 
         #Read groups
         count = 0
-        with open("database/groups.csv", "r") as file:
+        with open(groups_path, "r") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if count == 0:
@@ -90,7 +105,7 @@ class Configuration:
                 
         #Read classes
         count = 0
-        with open("database/classes.csv", "r") as file:
+        with open(classes_path, "r") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if count == 0:
@@ -146,6 +161,7 @@ class Configuration:
     
     def GetNumberOfCourseClasses(self):
         return len(self._courseClasses)
+    
     
     # Returns TRUE if configuration is not parsed yet
     def isEmpty(self):
