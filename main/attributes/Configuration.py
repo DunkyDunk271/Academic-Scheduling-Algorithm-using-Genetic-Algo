@@ -96,7 +96,6 @@ class Configuration:
                 if count == 0:
                     count += 1
                     continue
-                print(row)
                 professor = self._professors[int(row[0])]
                 course = self._courses[int(row[1])]
                 duration = int(row[2])
