@@ -34,16 +34,24 @@ class CourseClass:
             studs.addClass(self)
             self.NumberOfSeats += studs.NumberOfStudents
     
+    def GetDuration(self):
+        return self.Duration
+    
+    def GetNumberOfSeats(self):
+        return self.NumberOfSeats
+    
+    def IsLabRequired(self):
+        return self.LabRequired
 
     def __hash__(self):
         return hash(self.Id)
 
     # TRUE if another class with overlapping student groups.
-    def groupsOverlap(self, o):
+    def GroupsOverlap(self, o):
         return len(self.Groups & o.Groups) > 0
 
     # TRUE if another class with the same professor.
-    def professorOverlaps(self, o):
+    def ProfessorOverlaps(self, o):
         return self.Professor == o.Professor
 
     # True if the number of students less than 90

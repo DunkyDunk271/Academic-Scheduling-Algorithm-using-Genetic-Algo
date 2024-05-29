@@ -23,6 +23,12 @@ class Room:
     def __hash__(self):
         return hash(self.Id)
     
+    def GetNumberOfSeats(self):
+        return self.NumberOfSeats
+    
+    def IsLab(self):
+        return self.Lab
+    
     # Compare ID
     def __eq__(self, other):
         if not isinstance(other, self.__class__):
