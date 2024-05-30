@@ -31,32 +31,32 @@
             {% for row in calendar %}
             {
                 id: '{{row.id}}',
-                title: '{{row.code}} - Prof: {{row.profname}} - Room: {{row.class}}',
+                title: '{{row.course}} - Prof: {{row.professor}} - Room: {{row.room}}',
                 start: '{{row.start}}',
                 end: '{{row.end}}',
-                profname: '{{row.profname}}',
-                class: '{{row.class}}'
+                professor: '{{row.professor}}',
+                room: '{{row.room}}'
             },
             {% endfor %}
         ],
         selectable: true,
         selectHelper: true,
         select: function(start, end, allDay) {
-            var title = prompt("Enter Event Title");
+            var course = prompt("Enter Course Name");
             var profname = prompt("Enter Professor Name");
-            var classname = prompt("Enter Classroom");
-            if (title && profname && classname) {
+            var classroom = prompt("Enter Classroom");
+            if (course && profname && classroom) {
                 var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
                 var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
                 $.ajax({
                     url: "/insert",
                     type: "POST",
                     data: {
-                        title: title,
+                        course: course,
                         start: start,
                         end: end,
                         profname: profname,
-                        classname: classname
+                        classroom: classroom
                     },
                     success: function(data) {
                         alert("Added Successfully");
@@ -69,19 +69,19 @@
         eventResize: function(event) {
             var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
             var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-            var title = event.title.split(' - ')[0]; // Extracting title from formatted string
+            var course = event.course.split(' - ')[0]; // Extracting title from formatted string
             var profname = event.profname;
-            var classname = event.class;
+            var classroom = event.room;
             var id = event.id;
             $.ajax({
                 url: "/update",
                 type: "POST",
                 data: {
-                    title: title,
+                    course: course,
                     start: start,
                     end: end,
                     profname: profname,
-                    classname: classname,
+                    classroom: classroom,
                     id: id
                 },
                 success: function() {
@@ -93,9 +93,9 @@
         eventDrop: function(event) {
             var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
             var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-            var title = event.title.split(' - ')[0]; // Extracting title from formatted string
+            var course = event.course.split(' - ')[0]; // Extracting title from formatted string
             var profname = event.profname;
-            var classname = event.class;
+            var classroom = event.room;
             var id = event.id;
             $.ajax({
                 url: "/update",
@@ -105,7 +105,7 @@
                     start: start,
                     end: end,
                     profname: profname,
-                    classname: classname,
+                    classroom: classroom,
                     id: id
                 },
                 success: function() {
@@ -153,6 +153,17 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-info span {
+      font-weight: bold;
     }
 
     .header h1 {
@@ -243,24 +254,32 @@
 <body>
   <div class="header">
     <h1>Academic Calendar</h1>
-    <a href="/logout" class="sign-out">Sign Out</a>
+    <div class="user-info">
+      <span>Hi, {{ session.name }}</span>
+      <a href="/logout" class="sign-out">Sign Out</a>
+    </div>  
   </div>
   <div class="main">
     <div class="sidebar">
       <h3>Add Event</h3>
       <form action="/insert" method="POST">
-        <label for="title">Title</label>
-        <input type="text" id="title" name="title" placeholder="Enter the title" required>
+        <label for="course">Course</label>
+        <input type="text" id="title" name="title" placeholder="Enter the course" required>
+        <label for="credits">Credits</label>
+        <input type="text" id="title" name="title" placeholder="Enter the credits number" required>
         <label for="profname">Professor Name</label>
         <input type="text" id="profname" name="profname" placeholder="Enter the professor name" required>
-        <label for="classname">Classroom</label>
-        <input type="text" id="classname" name="classname" placeholder="Enter the classroom" required>
+        <label for="classroom">Classroom</label>
+        <input type="text" id="classroom" name="classroom" placeholder="Enter the classroom" required>
         <label for="start">Start Time</label>
         <input type="datetime-local" id="start" name="start" required>
         <label for="end">End Time</label>
         <input type="datetime-local" id="end" name="end" required>
         <button type="submit">Save</button>
         <button type="reset" class="reset">Cancel</button>
+      </form>
+      <form action="/generate">
+        <button type="submit">Generate Calendar</button>
       </form>
     </div>
     <div class="content">

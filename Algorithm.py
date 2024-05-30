@@ -33,7 +33,7 @@ class Algorithm:
 
     
     def GetInstance():
-        prototype = Schedule(3, 3, 75, 4)
+        prototype = Schedule(3, 3, 75, 5)
         instance = Algorithm(100, 10, 10, prototype)
         return instance
     

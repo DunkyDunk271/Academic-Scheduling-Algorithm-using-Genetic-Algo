@@ -2,6 +2,11 @@ from flask import Flask, render_template, request, jsonify, session, redirect, u
 from flask_mysqldb import MySQL, MySQLdb
 import re
 
+import os
+import main
+import csv
+
+
 app = Flask(__name__)
 
 app.secret_key = "course_related_project1"
@@ -81,14 +86,15 @@ def load_index():
 @app.route("/insert", methods=["POST"])
 def insert():
     if request.method == 'POST':
-        title = request.form['title']
-        profname = request.form['profname']
-        classname = request.form['classname']
+        course = request.form['course']
+        credits = request.form['credits']
+        professor = request.form['professor']
+        room = request.form['room']
         start = request.form['start']
         end = request.form['end']
 
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute("INSERT INTO events (code, profname, class, start, end) VALUES (%s, %s, %s, %s, %s)", [title, profname, classname, start, end])
+        cursor.execute("INSERT INTO events (course, credits, professor, room, start, end) VALUES (%s, %s, %s, %s, %s, %s)", [course, credits, professor, room, start, end])
         mysql.connection.commit()
         cursor.close()
 
@@ -98,15 +104,16 @@ def insert():
 @app.route("/update", methods=["POST"])
 def update():
     if request.method == 'POST':
-        title = request.form['title']
-        profname = request.form['profname']
-        classname = request.form['classname']
+        course = request.form['course']
+        credits = request.form['credits']
+        professor = request.form['professor']
+        room = request.form['room']
         start = request.form['start']
         end = request.form['end']
         id = request.form['id']
 
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute("UPDATE events SET code = %s, profname = %s, class = %s, start = %s, end= %s WHERE id = %s", [title, profname, classname, start, end, id])
+        cursor.execute("UPDATE events SET course = %s, credits = %s profname = %s, class = %s, start = %s, end= %s WHERE id = %s", [course, credits, professor, room, start, end, id])
         mysql.connection.commit()
         cursor.close()
 
@@ -125,6 +132,41 @@ def ajax_delete():
 
         msg = 'Record deleted successfully'
         return jsonify(msg)
+    
+
+# Generate Calendar
+@app.route('/generate')
+def generate():
+    # Delete all records in the table
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('DELETE FROM events')
+    mysql.connection.commit()
+    cursor.close()
+    # Generate new calendar
+    main.run()
+    cwd = os.getcwd()
+    path = os.path.join(cwd, 'database\output.csv')
+    with open(path, 'r') as file:
+        reader = csv.reader(file)
+        count = 0
+        for row in reader:
+                if count == 0:
+                    count+=1
+                    continue
+                course = row[1]
+                credits = row[2]
+                professor = row[3]
+                room = row[4]
+                start = row[5]
+                end = row[6]
+                
+                cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+                cursor.execute("INSERT INTO events (course, credits, professor, room, start, end) VALUES (%s, %s, %s, %s, %s, %s)", [course, credits, professor, room, start, end])
+                mysql.connection.commit()
+                cursor.close()
+
+    msg = 'Added Successfully'
+    return load_index()
 
 if __name__ == "__main__":
     app.run(debug=True)

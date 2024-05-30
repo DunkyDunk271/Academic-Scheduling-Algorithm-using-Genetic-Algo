@@ -33,19 +33,11 @@ class Configuration:
 
         # Get file path
         cwd = os.getcwd()
-        if 'Backend' in cwd:
-            professors_path = os.path.join(cwd, 'database\professors.csv')
-            courses_path = os.path.join(cwd, 'database\courses.csv')
-            rooms_path = os.path.join(cwd, 'database\\rooms.csv')
-            groups_path = os.path.join(cwd, 'database\groups.csv')
-            classes_path = os.path.join(cwd, 'database\classes.csv')
-
-        else:
-            professors_path = os.path.join(cwd, 'Backend\database\professors.csv')
-            courses_path = os.path.join(cwd, 'Backend\database\courses.csv')
-            rooms_path = os.path.join(cwd, 'Backend\database\\rooms.csv')
-            groups_path = os.path.join(cwd, 'Backend\database\groups.csv')
-            classes_path = os.path.join(cwd, 'Backend\database\classes.csv')
+        professors_path = os.path.join(cwd, 'database\professors.csv')
+        courses_path = os.path.join(cwd, 'database\courses.csv')
+        rooms_path = os.path.join(cwd, 'database\\rooms.csv')
+        groups_path = os.path.join(cwd, 'database\groups.csv')
+        classes_path = os.path.join(cwd, 'database\classes.csv')
 
         # Read professors
         count = 0
