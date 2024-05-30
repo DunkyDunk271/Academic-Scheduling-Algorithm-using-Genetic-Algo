@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-image: url('https://admissions.vinuni.edu.vn/wp-content/uploads/sites/6/2022/07/VinUNi-scaled-e1658900648261.jpg'); /* Add your background image URL here */
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start; /* Align to the left */
+    align-items: center;
+    height: 100vh;
+  }
+
+  .signin-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 0px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    height: 93vh; /* Fill the entire height */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align items to the start */
+    align-items: center;
+    position: relative; /* To position the forgot password link */
+  }
+
+  .signin-container img {
+    width: 100px; /* Adjust the width as needed */
+    margin-top: 20px; /* Add top margin to move the logo down a bit */
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+
+  form {
+    width: 100%;
+  }
+
+  label {
+    font-weight: bold;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 12px; /* Increased padding for more elegant look */
+    margin: 8px 0;
+    border: none; /* Remove border */
+    border-radius: 8px; /* Increased border-radius for rounded corners */
+    box-sizing: border-box;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow inside */
+    background-color: #f0f0f0; /* Light background color */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+  }
+
+  input[type="text"]:focus,
+  input[type="password"]:focus {
+    background-color: #e0e0e0; /* Change background color on focus */
+    outline: none; /* Remove default outline */
+  }
+  a {
+    color: #ffffff;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; /* Space between the buttons */
+  }
+
+  button {
+    width: 60%;
+    padding: 10px;
+    background-color: #C83538;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+  }
+
+  .create-account {
+    width: 100%;
+    background-color: #324674;
+  }
+
+  button:hover {
+    opacity: 0.9;
+  }
+
+  .forgot-password {
+    margin-top: auto; /* Push to the bottom */
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    bottom: 20px;
+    color: #000; /* Change to black */
+    text-decoration: none;
+    font-size: 0.9em;
+  }
+
+  .forgot-password:hover {
+    text-decoration: underline;
+  }
+
+  .alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  position: relative;
+}
+
+.alert-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+  font-size: smaller;
+}
+</style>
+</head>
+<body>
+<div class="signin-container">
+  <img src="https://upload.wikimedia.org/wikipedia/vi/4/4b/Tr%C6%B0%E1%BB%9Dng_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_VinUni_logo.png" alt="Logo"> <!-- Add your logo URL here -->
+  <h2>Login to your account</h2>
+  {% if mesage is defined and mesage %}
+			<div class="alert alert-warning">{{ mesage }}</div>
+		{% endif %}
+  <form action="/login" method="post">
+    <div>
+      <input type="text" id="email" name="email" placeholder="Username" required>
+    </div>
+    <div>
+      <input type="password" id="password" name="password" placeholder="Password" required>
+    </div>
+    <div class="button-container">
+      <button type="submit" class="btn btn-primary">Sign In</button>
+      <button type="button" class="create-account"><a href="/Frontend/templates/register.html">Create Account</a></button>
+    </div>
+  </form>
+  <div class="forgot-password">
+    <a  href='/templates/index.html' >Forgot Password?</a>
+  </div>
+</div>
+</body>
+</html>

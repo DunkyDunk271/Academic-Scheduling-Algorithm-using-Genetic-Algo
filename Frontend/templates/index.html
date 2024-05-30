@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
- <head>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Genetic Algorithm</title>
+  <title>Academic Calendar</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -11,247 +11,261 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/gcal.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/locale-all.js"></script>
   <script>
   $(document).ready(function() {
-   var calendar = $('#calendar').fullCalendar({
-    editable:true,
-    header:{
-     left:'prev,next today',
-     center:'title',
-     right:'month,agendaWeek,agendaDay'
-    },
-    events: [{% for row in calendar %}{ id : '{{row.id}}', title : '{{row.title}}', start : '{{row.start_event}}', end : '{{row.end_event}}', }, {% endfor %}],
-    selectable:true,
-    selectHelper:true,
-    select: function(start, end, allDay)
-    {
-     var title = prompt("Enter Event Title");
-     if(title)
-     {
-      var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
-      var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
-      $.ajax({
-       url:"/insert",
-       type:"POST",
-       data:{title:title, start:start, end:end},
-       success:function(data)
-       {
-         //alert(data)
-        alert("Added Successfully");
-        window.location.replace("/");
-       }
-      })
-     }
-    },
-    editable:true,
-    eventResize:function(event)
-    {
-     var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-     var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-     var title = event.title;
-     var id = event.id;
-     $.ajax({
-      url:"/update",
-      type:"POST",
-      data:{title:title, start:start, end:end, id:id},
-      success:function(){
-       calendar.fullCalendar('refetchEvents');
-       alert('Event Update');
-      }
-     })
-    },
-     
-    eventDrop:function(event)
-    {
-     var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-     var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-     var title = event.title;
-     var id = event.id;
-     $.ajax({
-      url:"/update",
-      type:"POST",
-      data:{title:title, start:start, end:end, id:id},
-      success:function()
-      {
-       calendar.fullCalendar('refetchEvents');
-       alert("Event Updated");
-      }
-     });
-    },
- 
-    eventClick:function(event)
-    {
-     if(confirm("Are you sure you want to remove it?"))
-     {
-      var id = event.id;
-      $.ajax({
-       url:"/ajax_delete",
-       type:"POST",
-       data:{id:id},
-       success:function()
-       {
-        calendar.fullCalendar('refetchEvents');
-        alert("Event Removed");
-       }
-      })
-     }
-    },
- 
-   });
-  });
-    
+    var calendar = $('#calendar').fullCalendar({
+        editable: true,
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay,listMonth,listWeek,listDay'
+        },
+        views: {
+            listMonth: { buttonText: 'List Month' },
+            listWeek: { buttonText: 'List Week' },
+            listDay: { buttonText: 'List Day' }
+        },
+        events: [
+            {% for row in calendar %}
+            {
+                id: '{{row.id}}',
+                title: '{{row.code}} - Prof: {{row.profname}} - Room: {{row.class}}',
+                start: '{{row.start}}',
+                end: '{{row.end}}',
+                profname: '{{row.profname}}',
+                class: '{{row.class}}'
+            },
+            {% endfor %}
+        ],
+        selectable: true,
+        selectHelper: true,
+        select: function(start, end, allDay) {
+            var title = prompt("Enter Event Title");
+            var profname = prompt("Enter Professor Name");
+            var classname = prompt("Enter Classroom");
+            if (title && profname && classname) {
+                var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
+                var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+                $.ajax({
+                    url: "/insert",
+                    type: "POST",
+                    data: {
+                        title: title,
+                        start: start,
+                        end: end,
+                        profname: profname,
+                        classname: classname
+                    },
+                    success: function(data) {
+                        alert("Added Successfully");
+                        window.location.replace("/");
+                    }
+                });
+            }
+        },
+        editable: true,
+        eventResize: function(event) {
+            var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+            var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+            var title = event.title.split(' - ')[0]; // Extracting title from formatted string
+            var profname = event.profname;
+            var classname = event.class;
+            var id = event.id;
+            $.ajax({
+                url: "/update",
+                type: "POST",
+                data: {
+                    title: title,
+                    start: start,
+                    end: end,
+                    profname: profname,
+                    classname: classname,
+                    id: id
+                },
+                success: function() {
+                    calendar.fullCalendar('refetchEvents');
+                    alert('Event Updated');
+                }
+            });
+        },
+        eventDrop: function(event) {
+            var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+            var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+            var title = event.title.split(' - ')[0]; // Extracting title from formatted string
+            var profname = event.profname;
+            var classname = event.class;
+            var id = event.id;
+            $.ajax({
+                url: "/update",
+                type: "POST",
+                data: {
+                    title: title,
+                    start: start,
+                    end: end,
+                    profname: profname,
+                    classname: classname,
+                    id: id
+                },
+                success: function() {
+                    calendar.fullCalendar('refetchEvents');
+                    alert("Event Updated");
+                }
+            });
+        },
+        eventClick: function(event) {
+            if (confirm("Are you sure you want to remove it?")) {
+                var id = event.id;
+                $.ajax({
+                    url: "/ajax_delete",
+                    type: "POST",
+                    data: { id: id },
+                    success: function() {
+                        calendar.fullCalendar('refetchEvents');
+                        alert("Event Removed");
+                    }
+                });
+            }
+        }
+    });
+});
+</script>
+
   </script>
   <style>
     body {
-    font-family: Arial, sans-serif;
-    background-size: cover;
-    background-position: center;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: flex-start; /* Align to the left */
-    align-items: center;
-    height: 100vh;
-  }
+      font-family: Arial, sans-serif;
+      background-size: cover;
+      background-position: center;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
 
-  .reset {
-    width: 100%;
-    height: 100%;
-    background-color: #324674;
-  }
+    .header {
+      width: 100%;
+      background-color: #ffffff;
+      padding: 20px;
+      color: #324674;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-  .content{
-    max-width: 100%;
-    margin: 0 auto;
-    padding: auto;
-  }
+    .header h1 {
+      margin: 0;
+    }
 
-  .container-1 {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 0px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    height: 93vh; /* Fill the entire height */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Align items to the start */
-    align-items: center;
-    position: relative; /* To position the forgot password link */
-  }
+    .header .sign-out {
+      background-color: #C83538;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
 
-  h2 {
-    text-align: center;
-    color: #333;
-  }
+    .header .sign-out:hover {
+      background-color: #a62e30;
+    }
 
-  form {
-    width: 100%;
-  }
+    .main {
+      flex: 1;
+      display: flex;
+    }
 
-  label {
-    font-weight: bold;
-  }
+    .sidebar {
+      width: 300px;
+      background-color: #324674;
+      padding: 20px;
+      color: rgb(0, 0, 0);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
 
-  input[type="text"],
-  input[type="datetime-local"],
-  input[type="password"] {
-    width: 100%;
-    padding: 12px; /* Increased padding for more elegant look */
-    margin: 8px 0;
-    border: none; /* Remove border */
-    border-radius: 8px; /* Increased border-radius for rounded corners */
-    box-sizing: border-box;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow inside */
-    background-color: #f0f0f0; /* Light background color */
-    transition: background-color 0.3s ease; /* Smooth transition for background color */
-  }
+    .sidebar h3 {
+      color: #fff;
+    }
 
-  input[type="text"]:focus,
-  input[type="datetime-local"]:focus,
-  input[type="password"]:focus {
-    background-color: #e0e0e0; /* Change background color on focus */
-    outline: none; /* Remove default outline */
-  }
- 
-  a {
-    color: #ffffff;
-    cursor: pointer;
-    text-decoration: none;
-  }
+    .sidebar form {
+      display: flex;
+      flex-direction: column;
+    }
 
-  .button-container {
-    display: flex;
-    
-    gap: 10px; /* Space between the buttons */
-  }
- 
-  button {
-    width: 70%;
-    height: 100%;
-    padding: 10px;
-    background-color: #C83538;
-    color: #fff;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth transition for background color */
-  }
+    .sidebar label {
+      font-weight: bold;
+      margin-top: 10px;
+    }
 
-  .save {
-    width: 100%;
-    height: 100%;
-    background-color: #324674;
-  }
+    .sidebar input[type="text"],
+    .sidebar input[type="datetime-local"] {
+      padding: 10px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 5px;
+      background-color: #f0f0f0;
+    }
 
-  button:hover {
-    opacity: 0.9;
-  }
+    .sidebar button {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #C83538;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
 
-  .cancel {
-    margin-top: auto; /* Push to the bottom */
-    text-align: center;
-    width: 100%;
-    position: absolute;
-    bottom: 20px;
-    color: #000; /* Change to black */
-    text-decoration: none;
-    font-size: 0.9em;
-  }
+    .sidebar button:hover {
+      background-color: #a62e30;
+    }
+
+    .content {
+      flex: 1;
+      padding: 20px;
+      background-color: #f5f5f5;
+      overflow-y: auto;
+    }
+
+    #calendar {
+      max-width: 100%;
+      margin: 0 auto;
+    }
   </style>
- </head>
- <!--Academic Calendar-->
- <body>
-  <div class="sidebar">
-    <div class="container-1">
+</head>
+<body>
+  <div class="header">
+    <h1>Academic Calendar</h1>
+    <a href="/logout" class="sign-out">Sign Out</a>
+  </div>
+  <div class="main">
+    <div class="sidebar">
       <h3>Add Event</h3>
       <form action="/insert" method="POST">
-        <div>
-          <label for="title" class="control-label">Title</label>
-          <input type="text" id="title" name="title" placeholder="Enter the title" required>
-        </div>
-        <div>
-          <label for="start_event" class="control-label">Start Time</label>
-          <input type="datetime-local" class="form-control form-control-sm rounded-0" id="start_event" name="start_event" required>
-        </div>
-        <div>
-          <label for="end_event" class="control-label">End Time</label>
-          <input type="datetime-local" class="form-control form-control-sm rounded-0" id="end_event" name="end_event" required>
-        </div>
-        <div class="button-container">
-          <button type="submit" class="button">Save</button>
-          <button type="reset" class="reset">Cancel</button>
-        </div>
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" placeholder="Enter the title" required>
+        <label for="profname">Professor Name</label>
+        <input type="text" id="profname" name="profname" placeholder="Enter the professor name" required>
+        <label for="classname">Classroom</label>
+        <input type="text" id="classname" name="classname" placeholder="Enter the classroom" required>
+        <label for="start">Start Time</label>
+        <input type="datetime-local" id="start" name="start" required>
+        <label for="end">End Time</label>
+        <input type="datetime-local" id="end" name="end" required>
+        <button type="submit">Save</button>
+        <button type="reset" class="reset">Cancel</button>
       </form>
     </div>
-  </div>
-  <div class="content">
-    <br />
-      <h2 align="center">Academic Calendar</a></h2>
-      <br />
-    <div class="container">
+    <div class="content">
       <div id="calendar"></div>
     </div>
   </div>
- </body>
-</html>
+</body>
+ </html>
