@@ -9,7 +9,7 @@ def run():
     instance = Algorithm(100, 10, 10, prototype)
     config = Configuration()
     config.readcsv()
-    instance.Start()
+    instance.Generate()
     bestChromosome = instance.GetBestChromosome()
     classes = bestChromosome.GetClasses()
     number_of_rooms = config.GetNumberOfRooms()
