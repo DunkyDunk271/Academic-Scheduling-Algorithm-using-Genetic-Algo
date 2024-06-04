@@ -133,11 +133,11 @@
 </head>
 <body>
 <div class="signin-container">
-  <img src="https://upload.wikimedia.org/wikipedia/vi/4/4b/Tr%C6%B0%E1%BB%9Dng_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_VinUni_logo.png" alt="Logo"> <!-- Add your logo URL here -->
+  <img src="https://upload.wikimedia.org/wikipedia/vi/4/4b/Tr%C6%B0%E1%BB%9Dng_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_VinUni_logo.png" alt="Logo">
   <h2>Login to your account</h2>
-  {% if mesage is defined and mesage %}
-			<div class="alert alert-warning">{{ mesage }}</div>
-		{% endif %}
+  {% if message is defined and message %}
+			<div class="alert alert-warning">{{ message }}</div>
+	{% endif %}
   <form action="/login" method="post">
     <div>
       <input type="text" id="email" name="email" placeholder="Username" required>
@@ -147,12 +147,9 @@
     </div>
     <div class="button-container">
       <button type="submit" class="btn btn-primary">Sign In</button>
-      <button type="button" class="create-account"><a href="/templates/register.html">Create Account</a></button>
+      <button type="button" class="create-account"><a href="{{url_for('register')}}">Create Account</a></button>
     </div>
   </form>
-  <div class="forgot-password">
-    <a  href='/templates/index.html' >Forgot Password?</a>
-  </div>
 </div>
 </body>
 </html>
