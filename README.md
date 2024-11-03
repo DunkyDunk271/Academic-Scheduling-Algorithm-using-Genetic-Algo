@@ -1,4 +1,11 @@
 # Academic Scheduling Algorithm
+## Introduction:
+This project addresses the University Timetable Problem (UTP), which involves creating a complete weekly timetable given the data of timeslots, professors, and courses. The UTP is known for its complexity and is classified as NP-hard, meaning it cannot be solved within reasonable time complexity using a deterministic algorithm. Various educational institutions have explored this complex problem using different approaches. 
+
+Despite the efficiency of these existing methods, they are not optimal when dealing with large data inputs due to the NP-hard nature of the problem. Our work aims to find improvements based on Dahiya's Course Scheduling Algorithm. By addressing these gaps, we hope to develop an efficient algorithm for Vin University and lay a foundation for further research projects. 
+
+To address the inefficiency and create a more balanced learning experience, we propose developing an algorithm that optimizes class scheduling and teaching assignments. This approach aims to ensure a balanced workload distribution throughout the week, enabling students to manage their time more effectively and maximize their learning potential. 
+
 ## I. Set up the Flask application
 
 1. Using venv (Built-in Python Module):
